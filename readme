@@ -1,0 +1,18 @@
+## testing function call on heap
+Now the test is for the whole object file, it's not needed to copy it's text section to another file.The related points as such:
+* Giving the execution access to heap
+* Copying the object file to heap
+* Finding the .text address and functions' address in the file, it refers to the section headers as .text, .symtab, strtab, shstrtab.
+* Combining the base address to locate the function, then call the function.   
+
+If you need to test without considering the location of the code,  copying the contents of the .text to a new file, follow the command:
+
+```
+objcopy -dump-section .text=com.bin com.o
+
+```
+
+
+
+
+
