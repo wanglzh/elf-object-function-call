@@ -7,6 +7,8 @@
 
 #include "component.c" // component implementation
 
+#define USE_ELF
+
 int main(int argc, char** argv)
 {
 	printf("hello PIC test!\n");
@@ -27,9 +29,9 @@ int main(int argc, char** argv)
 	void* buffer = aligned_alloc(page_size, memory_size);
 	mprotect(buffer, memory_size, PROT_READ|PROT_WRITE|PROT_EXEC);
 
-#define USE_ELF
 #ifdef USE_ELF
-	//reading object file's text section: "objcopy --dump-section .text=com.bin com.o"
+	//reading object file's text section to another file: "objcopy --dump-section .text=com.bin com.o"
+	//instead of moving the .text section out, now reading the whole object file to memory
 	printf("---using function from elf file.\n");
 	FILE* f = fopen("./com.o", "rb");
 	size_t size = fread(buffer, 1, memory_size, f);
